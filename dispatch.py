@@ -1,7 +1,6 @@
-from itertools import chain
-from pprint import pprint
-from typing import Dict, List, Any, Generator, Tuple, Union, Sequence
 from contextlib import suppress
+from pprint import pprint
+from typing import Any, Dict, Generator, List
 
 
 class GenData:
