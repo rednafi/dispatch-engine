@@ -68,14 +68,6 @@ class GenData:
         return man
 
 
-gen = GenData(
-    hub_id=0,
-    parcel_ids=list(range(100, 120)),
-    area_ids=list(range(1000, 1020)),
-    men_ids=list(range(20, 26)),
-)
-
-
 class Algos:
     """An assortment of parcel dispatch algorithms."""
 
@@ -125,6 +117,14 @@ class DispatchEngine:
 
 
 if __name__ == "__main__":
+
+    gen = GenData(
+        hub_id=0,
+        parcel_ids=list(range(100, 120)),
+        area_ids=list(range(1000, 1020)),
+        men_ids=list(range(20, 26)),
+    )
+
     parcels = gen.gen_parcels()
     men = gen.gen_men()
 
