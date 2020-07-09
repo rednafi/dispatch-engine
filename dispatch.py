@@ -1,6 +1,6 @@
 from itertools import chain
 from pprint import pprint
-from typing import Dict, List, Any, Generator, Tuple, Union
+from typing import Dict, List, Any, Generator, Tuple, Union, Sequence
 
 
 class GenData:
@@ -68,46 +68,29 @@ class GenData:
         return man
 
 
-class Algos:
-    """An assortment of parcel dispatch algorithms."""
+class Algo:
+    """Primary parcel dispatch algorithm."""
 
     @staticmethod
-    def equity_chunk(l: list, n: int) -> Generator[list, None, None]:
-        """Yield n number of striped chunks from l."""
+    def ordered_chunk(seq: list, n: int) -> Generator[List, None, None]:
+        """Yield n number of ordered chunks from seq."""
 
-        for i in range(0, n):
-            yield l[i::n]
+        k, m = divmod(len(seq), n)
 
-    @staticmethod
-    def ordered_chunk(l: list, n: int) -> chain[Union[List, Tuple]]:
-        """Yield n number of ordered chunks from l."""
-
-        chunk_len, remainder = divmod(len(l), n)
-        first, rest = l[: chunk_len + remainder], l[chunk_len + remainder :]
-
-        return chain([first], zip(*[iter(rest)] * chunk_len))
+        return (seq[i * k + min(i, m) : (i + 1) * k + min(i + 1, m)] for i in range(n))
 
 
 class DispatchEngine:
     def __init__(
-        self,
-        algos: Algos,
-        selected_algo: str,
-        parcels: List[Dict[str, int]],
-        men: List[Dict[str, int]],
+        self, algo: Algo, parcels: List[Dict[str, int]], men: List[Dict[str, int]],
     ) -> None:
 
-        self.algos = algos
-        self.selected_algo = selected_algo
+        self.algo = algo
         self.parcels = parcels
         self.men = men
 
-    def dispatch(self):
-        if self.selected_algo == "equity_chunk":
-            return self.algos.equity_chunk(self.parcels, len(self.men))
-
-        elif self.selected_algo == "ordered_chunk":
-            return self.algos.ordered_chunk(self.parcels, len(self.men))
+    def dispatch(self) -> Generator[List, None, None]:
+        return self.algo.ordered_chunk(self.parcels, len(self.men))
 
     def dispatch_hook(self) -> Dict[int, Any]:
         dispatched = self.dispatch()
@@ -128,7 +111,7 @@ if __name__ == "__main__":
     parcels = gen.gen_parcels()
     men = gen.gen_men()
 
-    algos = Algos()
+    algos = Algo()
 
-    de = DispatchEngine(algos, "ordered_chunk", parcels, men)
+    de = DispatchEngine(algos, parcels, men)
     pprint(de.dispatch_hook())
