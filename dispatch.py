@@ -1,6 +1,7 @@
 from itertools import chain
 from pprint import pprint
 from typing import Dict, List, Any, Generator, Tuple, Union, Sequence
+from contextlib import suppress
 
 
 class GenData:
@@ -75,9 +76,18 @@ class Algo:
     def ordered_chunk(seq: list, n: int) -> Generator[List, None, None]:
         """Yield n number of ordered chunks from seq."""
 
-        k, m = divmod(len(seq), n)
+        if n == 0:
+            print("Binsize cannot be zero.")
 
-        return (seq[i * k + min(i, m) : (i + 1) * k + min(i + 1, m)] for i in range(n))
+        elif isinstance(n, float):
+            print("Binsize cannot be a float.")
+
+        with suppress(ZeroDivisionError, TypeError):
+            k, m = divmod(len(seq), n)
+
+            return (
+                seq[i * k + min(i, m) : (i + 1) * k + min(i + 1, m)] for i in range(n)
+            )
 
 
 class DispatchEngine:
