@@ -1,6 +1,6 @@
 from itertools import chain
 from pprint import pprint
-from typing import Dict, List
+from typing import Dict, List, Any, Generator, Tuple, Union
 
 
 class GenData:
@@ -80,18 +80,19 @@ class Algos:
     """An assortment of parcel dispatch algorithms."""
 
     @staticmethod
-    def equity_chunk(l: list, n: int):
+    def equity_chunk(l: list, n: int) -> Generator[list, None, None]:
         """Yield n number of striped chunks from l."""
 
         for i in range(0, n):
             yield l[i::n]
 
     @staticmethod
-    def ordered_chunk(l: list, n: int):
+    def ordered_chunk(l: list, n: int) -> chain[Union[List, Tuple]]:
         """Yield n number of ordered chunks from l."""
 
         chunk_len, remainder = divmod(len(l), n)
         first, rest = l[: chunk_len + remainder], l[chunk_len + remainder :]
+
         return chain([first], zip(*[iter(rest)] * chunk_len))
 
 
@@ -102,7 +103,8 @@ class DispatchEngine:
         selected_algo: str,
         parcels: List[Dict[str, int]],
         men: List[Dict[str, int]],
-    ):
+    ) -> None:
+
         self.algos = algos
         self.selected_algo = selected_algo
         self.parcels = parcels
@@ -115,7 +117,7 @@ class DispatchEngine:
         elif self.selected_algo == "ordered_chunk":
             return self.algos.ordered_chunk(self.parcels, len(self.men))
 
-    def dispatch_hook(self):
+    def dispatch_hook(self) -> Dict[int, Any]:
         dispatched = self.dispatch()
         man_ids = [d["man_id"] for d in self.men]
         men_parcels = {k: v for k, v in zip(man_ids, list(dispatched))}
