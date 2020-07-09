@@ -1,7 +1,6 @@
-from itertools import cycle, groupby, chain
-from typing import Generator, Iterable, Tuple, Any, List, Dict, Type
-import random
+from itertools import chain
 from pprint import pprint
+from typing import Dict, List
 
 
 class GenData:
@@ -123,7 +122,7 @@ class DispatchEngine:
         return men_parcels
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     parcels = gen.gen_parcels()
     men = gen.gen_men()
 
