@@ -1,20 +1,20 @@
 from contextlib import suppress
 from pprint import pprint
-from typing import Any, Dict, Generator, List
+from typing import Any, Dict, Generator, List, Tuple
 
 
 class GenData:
-    """Generates parcel & delivery man data."""
+    """Generates parcel & delivery person data."""
 
     def __init__(
         self,
-        # common property among parcels and men
+        # common property among parcels and person
         hub_id: int,
         # parcel properties
         parcel_ids: List[int],
         area_ids: List[int],
-        # men properties
-        men_ids: List[int],
+        # person properties
+        person_ids: List[int],
     ) -> None:
 
         self.hub_id = hub_id  # This should be the same in a collection
@@ -22,7 +22,7 @@ class GenData:
         self.parcel_ids = parcel_ids
         self.area_ids = area_ids
 
-        self.men_ids = men_ids
+        self.person_ids = person_ids
 
     def gen_parcels(self) -> List[Dict[str, int]]:
         """Generate a list of parcels' data."""
@@ -36,15 +36,15 @@ class GenData:
         ]
         return parcels
 
-    def gen_men(self) -> List[Dict[str, int]]:
-        """Generate a list of delivery men's data."""
+    def gen_person(self) -> List[Dict[str, int]]:
+        """Generate a list of delivery person's data."""
 
-        hub_ids = [self.hub_id] * len(self.men_ids)
-        men = [
-            self._gen_man(hub_id, man_id)
-            for hub_id, man_id in zip(hub_ids, self.men_ids)
+        hub_ids = [self.hub_id] * len(self.person_ids)
+        persons = [
+            self._gen_person(hub_id, person_id)
+            for hub_id, person_id in zip(hub_ids, self.person_ids)
         ]
-        return men
+        return persons
 
     @staticmethod
     def _gen_parcel(hub_id: int, parcel_id: int, area_id: int) -> Dict[str, int]:
@@ -58,14 +58,14 @@ class GenData:
         return parcel
 
     @staticmethod
-    def _gen_man(hub_id: int, man_id: int) -> Dict[str, int]:
-        """Generate one delivery man data."""
+    def _gen_person(hub_id: int, person_id: int) -> Dict[str, int]:
+        """Generate one delivery person data."""
 
-        man = {
+        person = {
             "hub_id": hub_id,
-            "man_id": man_id,
+            "person_id": person_id,
         }
-        return man
+        return person
 
 
 class Algo:
@@ -91,21 +91,21 @@ class Algo:
 
 class DispatchEngine:
     def __init__(
-        self, algo: Algo, parcels: List[Dict[str, int]], men: List[Dict[str, int]],
+        self, algo: Algo, parcels: List[Dict[str, int]], person: List[Dict[str, int]],
     ) -> None:
 
         self.algo = algo
         self.parcels = parcels
-        self.men = men
+        self.person = person
 
     def dispatch(self) -> Generator[List, None, None]:
-        return self.algo.ordered_chunk(self.parcels, len(self.men))
+        return self.algo.ordered_chunk(self.parcels, len(self.person))
 
     def dispatch_hook(self) -> Dict[int, Any]:
         dispatched = self.dispatch()
-        man_ids = [d["man_id"] for d in self.men]
-        men_parcels = {k: v for k, v in zip(man_ids, list(dispatched))}
-        return men_parcels
+        person_ids = [d["person_id"] for d in self.person]
+        person_parcels = {k: v for k, v in zip(person_ids, list(dispatched))}
+        return person_parcels
 
 
 if __name__ == "__main__":
@@ -114,13 +114,13 @@ if __name__ == "__main__":
         hub_id=0,
         parcel_ids=list(range(100, 120)),
         area_ids=list(range(1000, 1020)),
-        men_ids=list(range(20, 26)),
+        person_ids=list(range(20, 26)),
     )
 
     parcels = gen.gen_parcels()
-    men = gen.gen_men()
+    person = gen.gen_person()
 
     algos = Algo()
 
-    de = DispatchEngine(algos, parcels, men)
+    de = DispatchEngine(algos, parcels, person)
     pprint(de.dispatch_hook())
