@@ -91,36 +91,26 @@ class Algo:
 
 class DispatchEngine:
     def __init__(
-        self, algo: Algo, parcels: List[Dict[str, int]], person: List[Dict[str, int]],
+        self, algo: Algo, parcels: List[Dict[str, int]], persons: List[Dict[str, int]],
     ) -> None:
 
         self.algo = algo
         self.parcels = parcels
-        self.person = person
+        self.persons = persons
 
     def dispatch(self) -> Generator[List, None, None]:
-        return self.algo.ordered_chunk(self.parcels, len(self.person))
+        return self.algo.ordered_chunk(self.parcels, len(self.persons))
 
-    def dispatch_hook(self) -> Dict[int, Any]:
-        dispatched = self.dispatch()
-        person_ids = [d["person_id"] for d in self.person]
+    @classmethod
+    def dispatch_hook(cls, algo, parcels, persons) -> Dict[int, Any]:
+        """Making this a classmethod is necessary for this task to be
+        consumed by rq worker."""
+
+        instance = cls(algo, parcels, persons)
+        dispatched = instance.dispatch()
+        person_ids = [d["person_id"] for d in instance.persons]
         person_parcels = {k: v for k, v in zip(person_ids, list(dispatched))}
         return person_parcels
 
 
-if __name__ == "__main__":
-
-    gen = GenData(
-        hub_id=0,
-        parcel_ids=list(range(100, 120)),
-        area_ids=list(range(1000, 1020)),
-        person_ids=list(range(20, 26)),
-    )
-
-    parcels = gen.gen_parcels()
-    person = gen.gen_person()
-
-    algos = Algo()
-
-    de = DispatchEngine(algos, parcels, person)
-    pprint(de.dispatch_hook())
+dispatch_hook = DispatchEngine.dispatch_hook
