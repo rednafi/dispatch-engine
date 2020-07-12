@@ -1,6 +1,7 @@
 from contextlib import suppress
 from pprint import pprint
 from typing import Any, Dict, Generator, List, Tuple
+import csv
 
 
 class GenData:
@@ -112,5 +113,19 @@ class DispatchEngine:
         person_parcels = {k: v for k, v in zip(person_ids, list(dispatched))}
         return person_parcels
 
+    @classmethod
+    def send_csv(cls, person_parcels: Dict[int, Any], filename=None):
+        fields = ["person_id", "area_id", "hub_id", "parcel_id"]
+
+
+        with open(filename, "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=fields)
+            writer.writeheader()
+            for person_id, parcels in person_parcels.items():
+                for row in parcels:
+                    row["person_id"] = person_id
+                    writer.writerow(row)
+
 
 dispatch_hook = DispatchEngine.dispatch_hook
+send_csv = DispatchEngine.send_csv

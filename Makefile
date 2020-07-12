@@ -1,9 +1,9 @@
-start_worker:
-	cd dispatch-engine && python -m app.apis.dispatch.start_worker
+start_workers:
+	cd dispatch-engine && python -m app.apis.dispatch.start_workers
 
 
-start_task:
-	cd dispatch-engine && python -m app.apis.dispatch.start_task
+start_tasks:
+	cd dispatch-engine && python -m app.apis.dispatch.start_tasks
 
 start_monitor:
 	rq-dashboard
