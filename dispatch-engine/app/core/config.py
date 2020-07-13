@@ -12,7 +12,7 @@ class GlobalConfig(BaseSettings):
     # there is a shell environment variable having the same name,
     # that will take precedence.
 
-    # global configs will be pulled directly from the .env file
+    # the class Field is necessary to while defining global variables
     ENV_STATE: Optional[str] = Field(..., env="ENV_STATE")
     API_USERNAME: Optional[str] = Field(..., env="API_USERNAME")
     API_PASSWORD: Optional[str] = Field(..., env="API_PASSWORD")
