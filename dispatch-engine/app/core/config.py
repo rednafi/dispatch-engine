@@ -1,3 +1,5 @@
+"""The central configuration file."""
+
 from typing import Optional
 
 from pydantic import BaseSettings, Field
@@ -18,7 +20,7 @@ class GlobalConfig(BaseSettings):
 
     # env specific configs will be pulled from .env with specific prefixes
     REDIS_HOST: Optional[str] = None
-    REDIS_PORT: Optional[str]=None
+    REDIS_PORT: Optional[str] = None
 
     class Config:
         """Loads the dotenv file."""
@@ -55,4 +57,4 @@ class FactoryConfig:
 
 
 config = FactoryConfig(GlobalConfig().ENV_STATE)()
-#print(config.__repr__())
+# print(config.__repr__())
