@@ -10,9 +10,14 @@ class GlobalConfig(BaseSettings):
     # shell environment variable having the same name, that will take precedence.
 
     ENV_STATE: Optional[str] = None
+
     HOST: Optional[str] = None
     API_USERNAME: Optional[str] = None
     API_PASSWORD: Optional[str] = None
+
+    REDIS_HOST: Optional[str] = None
+    REDIS_PORT: Optional[str] = None
+    REDIS_PASSWORD: Optional[str] = None
 
     class Config:
         """Loads the dotenv file."""

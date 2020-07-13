@@ -13,9 +13,29 @@ services:
       - LOG_LEVEL=info                                  # by default info
       #- WORKER_CLASS="uvicorn.workers.UvicornWorker"   # by default this. don't touch
       - TIMEOUT=120                                     # by default 120 sec
-      
+
     build:
       context: ./
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
+
+  redis:
+    container_name: redis-cont
+    image: "redis:alpine"
+    environment:
+      - REDIS_PASSWORD=debian
+      - REDIS_REPLICATION_MODE=master
+    ports:
+      - "6379:6379"
+    volumes:
+      # save redisearch data to your current working directory
+      - ./redis-data:/data
+    command:
+      # Save if 100 keys are added in every 10 seconds
+      - "--save 10 100"
+      # Set password
+      - "--requirepass debian"
+
+volumes:
+  redis-data:

@@ -37,10 +37,10 @@ def start_queue(i):
         depends_on=job_dispatch_hook,
     )
     time.sleep(2)
-    print(job_dispatch_hook.result)
+    pprint(job_dispatch_hook.result)
 
 
 i = 0
-while i < 5:
+while i < 1:
     start_queue(i)
     i += 1
