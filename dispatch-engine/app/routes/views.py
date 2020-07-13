@@ -1,6 +1,6 @@
 from typing import Dict
 
-from app.apis.dispatch.task_queue import main_func as main_func_a
+from app.apis.dispatch.start_tasks import start_queue
 from fastapi import APIRouter, Depends
 from app.core.auth import get_current_user
 

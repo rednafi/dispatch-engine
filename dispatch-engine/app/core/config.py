@@ -6,18 +6,19 @@ from pydantic import BaseSettings, Field
 class GlobalConfig(BaseSettings):
     """Global configurations."""
 
-    # This variable will be loaded from the .env file. However, if there is a
-    # shell environment variable having the same name, that will take precedence.
+    # These variables will be loaded from the .env file. However, if
+    # there is a shell environment variable having the same name,
+    # that will take precedence.
 
-    ENV_STATE: Optional[str] = None
+    # global configs will be pulled directly from the .env file
+    ENV_STATE: Optional[str] = Field(..., env="ENV_STATE")
+    API_USERNAME: Optional[str] = Field(..., env="API_USERNAME")
+    API_PASSWORD: Optional[str] = Field(..., env="API_PASSWORD")
+    REDIS_PASSWORD: Optional[str] = Field(..., env="REDIS_PASSWORD")
 
-    HOST: Optional[str] = None
-    API_USERNAME: Optional[str] = None
-    API_PASSWORD: Optional[str] = None
-
+    # env specific configs will be pulled from .env with specific prefixes
     REDIS_HOST: Optional[str] = None
-    REDIS_PORT: Optional[str] = None
-    REDIS_PASSWORD: Optional[str] = None
+    REDIS_PORT: Optional[str]=None
 
     class Config:
         """Loads the dotenv file."""
@@ -54,4 +55,4 @@ class FactoryConfig:
 
 
 config = FactoryConfig(GlobalConfig().ENV_STATE)()
-# print(config.__repr__())
+#print(config.__repr__())

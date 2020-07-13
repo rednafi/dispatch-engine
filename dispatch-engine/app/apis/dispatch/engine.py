@@ -1,3 +1,15 @@
+"""
+This is the heart of the source code that makes everything else tick.
+
+Class Description:
+------------------
+
+    Class Algo implements the parcel dispatch algorithm
+    Class DispatchEngine applies the algorithm on real data
+
+"""
+
+
 from contextlib import suppress
 from pprint import pprint
 from typing import Any, Dict, Generator, List, Tuple
@@ -26,7 +38,7 @@ class GenData:
         self.person_ids = person_ids
 
     def gen_parcels(self) -> List[Dict[str, int]]:
-        """Generate a list of parcels' data."""
+        """Generates a list of parcels' data."""
 
         hub_ids = [self.hub_id] * len(self.parcel_ids)
         parcels = [
@@ -38,7 +50,7 @@ class GenData:
         return parcels
 
     def gen_person(self) -> List[Dict[str, int]]:
-        """Generate a list of delivery person's data."""
+        """Generates a list of delivery person's data."""
 
         hub_ids = [self.hub_id] * len(self.person_ids)
         persons = [
@@ -49,7 +61,7 @@ class GenData:
 
     @staticmethod
     def _gen_parcel(hub_id: int, parcel_id: int, area_id: int) -> Dict[str, int]:
-        """Generate one parcel data."""
+        """Generates one parcel data."""
 
         parcel = {
             "hub_id": hub_id,
@@ -60,7 +72,7 @@ class GenData:
 
     @staticmethod
     def _gen_person(hub_id: int, person_id: int) -> Dict[str, int]:
-        """Generate one delivery person data."""
+        """Generates one delivery person data."""
 
         person = {
             "hub_id": hub_id,
@@ -70,7 +82,7 @@ class GenData:
 
 
 class Algo:
-    """Primary parcel dispatch algorithm."""
+    """Parcel dispatch algorithm."""
 
     @staticmethod
     def ordered_chunk(seq: list, n: int) -> Generator[List, None, None]:
@@ -91,6 +103,9 @@ class Algo:
 
 
 class DispatchEngine:
+    """Applies the parcel dispatch algorithm implemented in the class
+    Algo on real data."""
+
     def __init__(
         self, algo: Algo, parcels: List[Dict[str, int]], persons: List[Dict[str, int]],
     ) -> None:
@@ -115,8 +130,9 @@ class DispatchEngine:
 
     @classmethod
     def send_csv(cls, person_parcels: Dict[int, Any], filename=None):
-        fields = ["person_id", "area_id", "hub_id", "parcel_id"]
+        """Converting the output of dispatch_hook into csv."""
 
+        fields = ["person_id", "area_id", "hub_id", "parcel_id"]
 
         with open(filename, "w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=fields)
@@ -126,6 +142,6 @@ class DispatchEngine:
                     row["person_id"] = person_id
                     writer.writerow(row)
 
-
+# binding the classmethods to make them work like functions
 dispatch_hook = DispatchEngine.dispatch_hook
 send_csv = DispatchEngine.send_csv
