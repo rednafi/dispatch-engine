@@ -1,5 +1,5 @@
 # ignore redis-data
-app/redis-data/
+app/redis-data/dump.rdb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
