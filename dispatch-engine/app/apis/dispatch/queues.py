@@ -1,6 +1,11 @@
+"""
+This module establishes the redis connection necessary for messaging
+and defines the task queues.
+"""
+
+from app.core.config import config
 from redis import Redis
 from rq import Queue
-from app.core.config import config
 
 redis_connection = Redis(
     config.REDIS_HOST, config.REDIS_PORT, password=config.REDIS_PASSWORD

@@ -1,5 +1,9 @@
-from rq import Worker
+"""
+This module starts a single worker that listens to two queues.
+"""
+
 from app.apis.dispatch.queues import q_dispatch_hook, q_send_csv, redis_connection
+from rq import Worker
 
 
 def start_worker():

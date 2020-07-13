@@ -6,11 +6,12 @@ The first one applies the dispatch algorithm via the dispatch_hook method
 The second one sends csv file to the destination
 """
 
-from app.apis.dispatch.queues import q_dispatch_hook, q_send_csv
-from app.apis.dispatch.engine import GenData, Algo, dispatch_hook, send_csv
 
-from pprint import pprint
 import time
+from pprint import pprint
+
+from app.apis.dispatch.engine import Algo, GenData, dispatch_hook, send_csv
+from app.apis.dispatch.queues import q_dispatch_hook, q_send_csv
 
 # get the data
 gen = GenData(

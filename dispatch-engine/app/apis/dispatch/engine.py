@@ -10,10 +10,9 @@ Class Description:
 """
 
 
-from contextlib import suppress
-from pprint import pprint
-from typing import Any, Dict, Generator, List, Tuple
 import csv
+from contextlib import suppress
+from typing import Any, Dict, Generator, List
 
 
 class GenData:
@@ -141,6 +140,7 @@ class DispatchEngine:
                 for row in parcels:
                     row["person_id"] = person_id
                     writer.writerow(row)
+
 
 # binding the classmethods to make them work like functions
 dispatch_hook = DispatchEngine.dispatch_hook
