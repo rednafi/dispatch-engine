@@ -48,7 +48,7 @@ class GenData:
         ]
         return parcels
 
-    def gen_person(self) -> List[Dict[str, int]]:
+    def gen_persons(self) -> List[Dict[str, int]]:
         """Generates a list of delivery person's data."""
 
         hub_ids = [self.hub_id] * len(self.person_ids)

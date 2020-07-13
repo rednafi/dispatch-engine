@@ -22,7 +22,7 @@ gen = GenData(
 )
 
 parcels = gen.gen_parcels()
-persons = gen.gen_person()
+persons = gen.gen_persons()
 algo = Algo()
 
 
