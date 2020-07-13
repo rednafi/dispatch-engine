@@ -6,7 +6,6 @@ Class Description:
 
     Class Algo implements the parcel dispatch algorithm
     Class DispatchEngine applies the algorithm on real data
-
 """
 
 
@@ -145,3 +144,5 @@ class DispatchEngine:
 # binding the classmethods to make them work like functions
 dispatch_hook = DispatchEngine.dispatch_hook
 send_csv = DispatchEngine.send_csv
+
+

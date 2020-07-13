@@ -1,4 +1,4 @@
-version: "3"
+version: "3.5"
 services:
   # dispatch-engine:
   #   container_name: dispatch-engine
@@ -21,7 +21,7 @@ services:
   #     - "5000:5000"
 
   redis:
-    container_name: redis
+    container_name: dispatch-engine-redis
     image: redis:alpine
     env_file: .env
     environment:
@@ -37,12 +37,26 @@ services:
       # Set password
       - --requirepass ${REDIS_PASSWORD}
 
+    networks:
+      - dispatch-engine-net
+
   rq-dash:
-    container_name: rq-dash
+    container_name: dispatch-engine-rqdash
     image: eoranged/rq-dashboard
     env_file: .env
     environment:
       - RQ_DASHBOARD_REDIS_URL=redis://:${REDIS_PASSWORD}@${DEV_REDIS_HOST}:${DEV_REDIS_PORT}
+    ports:
+      - "9181:9181"
+
+    networks:
+      - dispatch-engine-net
 
 volumes:
   redis-data:
+
+networks:
+  dispatch-engine-net:
+    driver: bridge
+    name: dispatch-engine-net
+    external: true
