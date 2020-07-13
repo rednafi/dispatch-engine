@@ -1,5 +1,5 @@
 # ignore redis-data
-dispatch-engine/app/redis-data/
+app/redis-data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
