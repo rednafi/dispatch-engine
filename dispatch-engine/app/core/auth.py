@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta
 
 import jwt
-from fastapi import Depends, APIRouter, HTTPException, status
+from app.core.config import config
+from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jwt import PyJWTError
 from passlib.context import CryptContext
 from pydantic import BaseModel
-from app.core.config import config
 
 # to get a string like this run:
 # openssl rand -hex 32
@@ -16,7 +16,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 5256000000  # infinity
 
 
 fake_users_db = {
-    "ubuntu": {"username": config.API_USERNAME, "hashed_password": config.API_PASSWORD,}
+    "ubuntu": {"username": config.API_USERNAME, "hashed_password": config.API_PASSWORD}
 }
 
 

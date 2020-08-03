@@ -1,5 +1,5 @@
-from app.apis.dispatch.mainmod import main_func as main_func_a
 from app.apis.api_b.mainmod import main_func as main_func_b
+from app.apis.dispatch.mainmod import main_func as main_func_a
 
 
 def test_func_main_a() -> None:

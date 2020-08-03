@@ -1,8 +1,9 @@
 """
 Data will go into the body of a get request."""
 
-from pydantic import BaseModel
 from typing import List
+
+from pydantic import BaseModel
 
 
 class Parcel(BaseModel):

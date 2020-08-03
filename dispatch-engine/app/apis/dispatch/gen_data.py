@@ -1,6 +1,7 @@
 """This module generates sample data to send via POST request."""
 
-from typing import List, Dict
+from pprint import pprint
+from typing import Dict, List
 
 
 class GenData:
@@ -67,8 +68,6 @@ class GenData:
         return agent
 
 
-import random
-
 if __name__ == "__main__":
     gendata = GenData(
         hub_id=1,
@@ -80,5 +79,5 @@ if __name__ == "__main__":
     agents = gendata.gen_agents()
 
     parcels_agents_input = {"data": {"parcels": parcels, "agents": agents}}
-    from pprint import pprint
+
     pprint(parcels_agents_input)
