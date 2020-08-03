@@ -16,9 +16,6 @@ class Agent(BaseModel):
     agent_id: int
 
 
-class Parcels(BaseModel):
+class ParcelsAgents(BaseModel):
     parcels: List[Parcel]
-
-
-class Agents(BaseModel):
-    agents: List[Agent]
+    agents: List[Parcel]

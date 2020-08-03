@@ -18,7 +18,6 @@ class GenData:
     ) -> None:
 
         self.hub_id = hub_id  # This should be the same in a collection
-
         self.parcel_ids = parcel_ids
         self.area_ids = area_ids
 
@@ -66,3 +65,20 @@ class GenData:
             "agent_id": agent_id,
         }
         return agent
+
+
+import random
+
+if __name__ == "__main__":
+    gendata = GenData(
+        hub_id=1,
+        parcel_ids=list(range(100, 120)),
+        area_ids=list(range(200, 220)),
+        agent_ids=list(range(300, 305)),
+    )
+    parcels = gendata.gen_parcels()
+    agents = gendata.gen_agents()
+
+    parcels_agents_input = {"data": {"parcels": parcels, "agents": agents}}
+    from pprint import pprint
+    pprint(parcels_agents_input)
