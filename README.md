@@ -1,9 +1,8 @@
 # dispatch-engine
 
-A simple 1:1 dispatch engine
+A simple many to many dispatch engine
 
-## To Do
+## Sample Payload
 
-* Add redis queuing
-* Add csv download option
-* Send csv data to slack
+```
+
