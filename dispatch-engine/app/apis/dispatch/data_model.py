@@ -19,4 +19,4 @@ class Agent(BaseModel):
 
 class ParcelsAgents(BaseModel):
     parcels: List[Parcel]
-    agents: List[Parcel]
+    agents: List[Agent]

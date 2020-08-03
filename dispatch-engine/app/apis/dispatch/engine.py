@@ -75,8 +75,6 @@ class DispatchEngine:
                     writer.writerow(row)
 
 
-from functools import partial
-
 # binding the classmethods to make them work like functions
-dispatch_hook = partial(DispatchEngine.dispatch_hook, algo=Algo)
-send_csv = partial(DispatchEngine.send_csv, algo=Algo)
+dispatch_hook = DispatchEngine.dispatch_hook
+send_csv = DispatchEngine.send_csv

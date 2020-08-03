@@ -16,11 +16,10 @@ class GlobalConfig(BaseSettings):
     ENV_STATE: Optional[str] = Field(..., env="ENV_STATE")
     API_USERNAME: Optional[str] = Field(..., env="API_USERNAME")
     API_PASSWORD: Optional[str] = Field(..., env="API_PASSWORD")
-    REDIS_PASSWORD: Optional[str] = Field(..., env="REDIS_PASSWORD")
 
     # env specific configs will be pulled from .env with specific prefixes
-    REDIS_HOST: Optional[str] = None
-    REDIS_PORT: Optional[str] = None
+    # REDIS_HOST: Optional[str] = None
+    # REDIS_PORT: Optional[str] = None
 
     class Config:
         """Loads the dotenv file."""
