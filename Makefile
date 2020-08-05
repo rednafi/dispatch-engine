@@ -139,3 +139,7 @@ endif
 	@mypy $(path) --warn-redundant-casts --allow-redefinition --pretty \
 				--warn-unused-ignores --ignore-missing-imports
 	@echo
+
+.PHONY: run
+run:
+	cd dispatch-engine && uvicorn app.main:app --reload
