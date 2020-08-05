@@ -141,5 +141,5 @@ endif
 	@echo
 
 .PHONY: run
-run:
+run: # run fastapi with uvicorn
 	cd dispatch-engine && uvicorn app.main:app --reload
