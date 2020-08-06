@@ -2,9 +2,6 @@
 
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8-slim
 
-# Install Poetry
-RUN pip install poetry
-RUN poetry config virtualenvs.create false
 
 COPY ./requirements.txt  /app/
 
